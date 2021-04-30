@@ -44,16 +44,16 @@ def get_yesterday_ma5(ticker):
     ma5 = close.rolling(5).mean()
     return ma5[-2]
 
-op_mode_BTC = False
-hold_BTC = False
+op_mode_BTC = True
+hold_BTC = True
 op_mode_ETH = False
 hold_ETH = False
-op_mode_XRP = False
-hold_XRP = False
-op_mode_BCH = False
-hold_BCH = False
-op_mode_EOS = False
-hold_EOS = False
+op_mode_XRP = True
+hold_XRP = True
+op_mode_BCH = True
+hold_BCH = True
+op_mode_EOS = True
+hold_EOS = True
 
 while True:
     try:
