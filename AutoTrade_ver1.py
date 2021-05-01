@@ -31,8 +31,8 @@ def get_yesterday_ma5(ticker):
 
 op_mode_BTC = False
 hold_BTC = False
-op_mode_ETH = False
-hold_ETH = False
+op_mode_ETH = True
+hold_ETH = True
 op_mode_XRP = False
 hold_XRP = False
 op_mode_BCH = False
@@ -76,7 +76,7 @@ while True:
                 op_mode_EOS = False
                 hold_EOS = False
 
-        if now.hour == 10 and now.minute == 25 and (20 <= now.second <= 30):
+        if now.hour == 9 and now.minute == 0 and (20 <= now.second <= 30):
             krw_balance = upbit.get_balance("KRW")
             # BTC
             target_BTC = cal_target("KRW-BTC")
