@@ -17,7 +17,7 @@ def cal_target(ticker):
 def vol_target(ticker):
     df = pyupbit.get_ohlcv(ticker, "day", 2)
     yesterday = df.iloc[-2]
-    vol_target = 0.02 / ((yesterday['high'] - yesterday['low']) / yesterday['open'])
+    vol_target = 0.02 / ((yesterday['high'] - yesterday['low']) / yesterday['close'])
     if vol_target < 1:
         return vol_target
     else:
@@ -29,16 +29,16 @@ def get_yesterday_ma5(ticker):
     ma5 = close.rolling(5).mean()
     return ma5[-2]
 
-op_mode_BTC = False
-hold_BTC = False
+op_mode_BTC = True
+hold_BTC = True
 op_mode_ETH = True
 hold_ETH = True
 op_mode_XRP = False
 hold_XRP = False
-op_mode_BCH = False
-hold_BCH = False
-op_mode_EOS = False
-hold_EOS = False
+op_mode_BCH = True
+hold_BCH = True
+op_mode_EOS = True
+hold_EOS = True
 
 while True:
     try:
