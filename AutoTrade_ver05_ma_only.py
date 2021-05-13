@@ -23,12 +23,6 @@ def vol_target(ticker):
     else:
         return 1
 
-def get_yesterday_ma5(ticker):
-    df = pyupbit.get_ohlcv(ticker, "day", 6)
-    close = df['close']
-    ma5 = close.rolling(5).mean()
-    return ma5[-2]
-
 def get_ma_score (ticker):
     current_price = pyupbit.get_current_price(ticker)
     df = pyupbit.get_ohlcv(ticker, "day", 21)
@@ -62,8 +56,8 @@ def get_ma_score (ticker):
 
 op_mode_BTC = False
 hold_BTC = False
-op_mode_ETH = False
-hold_ETH = False
+op_mode_ETH = True
+hold_ETH = True
 op_mode_XRP = False
 hold_XRP = False
 op_mode_BCH = False
@@ -75,7 +69,7 @@ while True:
     try:
         now = datetime.datetime.now()
 
-        if now.hour == 8 and now.minute == 59 and (50 <= now.second <= 59):
+        if now.hour == 8 and now.minute == 59 and (55 <= now.second <= 59):
             # BTC
             if op_mode_BTC is True and hold_BTC is True:
                 BTC_balance = upbit.get_balance("KRW-BTC")
@@ -107,33 +101,27 @@ while True:
                 op_mode_EOS = False
                 hold_EOS = False
 
-        if now.hour == 9 and now.minute == 0 and (20 <= now.second <= 30):
+        if now.hour == 9 and now.minute == 0 and (20 <= now.second <= 25):
             krw_balance = upbit.get_balance("KRW")
             # BTC
             target_BTC = cal_target("KRW-BTC")
             vol_BTC = vol_target("KRW-BTC")
-            ma5_BTC = get_yesterday_ma5("KRW-BTC")
             op_mode_BTC = True
             # ETH
             target_ETH = cal_target("KRW-ETH")
             vol_ETH = vol_target("KRW-ETH")
-            ma5_ETH = get_yesterday_ma5("KRW-ETH")
             op_mode_ETH = True
             # XRP
             target_XRP = cal_target("KRW-XRP")
             vol_XRP = vol_target("KRW-XRP")
-            ma5_XRP = get_yesterday_ma5("KRW-XRP")
             op_mode_XRP = True
-            time.sleep(1)
             # BCH
             target_BCH = cal_target("KRW-BCH")
             vol_BCH = vol_target("KRW-BCH")
-            ma5_BCH = get_yesterday_ma5("KRW-BCH")
             op_mode_BCH = True
             # EOS
             target_EOS = cal_target("KRW-EOS")
             vol_EOS = vol_target("KRW-EOS")
-            ma5_EOS = get_yesterday_ma5("KRW-EOS")
             op_mode_EOS = True
             time.sleep(1)
 
@@ -144,30 +132,35 @@ while True:
         price_EOS = pyupbit.get_current_price("KRW-EOS")
 
         # BTC
-        if op_mode_BTC is True and hold_BTC is False and price_BTC is not None and price_BTC >= target_BTC and price_BTC >= ma5_BTC:
+        if op_mode_BTC is True and hold_BTC is False and price_BTC is not None and price_BTC >= target_BTC:
             ma_score_BTC = get_ma_score("KRW-BTC")
-            upbit.buy_market_order("KRW-BTC", krw_balance * 0.2 * vol_BTC * ma_score_BTC)
-            hold_BTC = True
+            if ma_score_BTC > 0:
+                upbit.buy_market_order("KRW-BTC", krw_balance * 0.2 * vol_BTC * ma_score_BTC)
+                hold_BTC = True
         # ETH
-        if op_mode_ETH is True and hold_ETH is False and price_ETH is not None and price_ETH >= target_ETH and price_ETH >= ma5_ETH:
+        if op_mode_ETH is True and hold_ETH is False and price_ETH is not None and price_ETH >= target_ETH:
             ma_score_ETH = get_ma_score("KRW-ETH")
-            upbit.buy_market_order("KRW-ETH", krw_balance * 0.2 * vol_ETH * ma_score_ETH)
-            hold_ETH = True
+            if ma_score_ETH > 0:
+                upbit.buy_market_order("KRW-ETH", krw_balance * 0.2 * vol_ETH * ma_score_ETH)
+                hold_ETH = True
         # XRP
-        if op_mode_XRP is True and hold_XRP is False and price_XRP is not None and price_XRP >= target_XRP and price_XRP >= ma5_XRP:
+        if op_mode_XRP is True and hold_XRP is False and price_XRP is not None and price_XRP >= target_XRP:
             ma_score_XRP = get_ma_score("KRW-XRP")
-            upbit.buy_market_order("KRW-XRP", krw_balance * 0.2 * vol_XRP * ma_score_XRP)
-            hold_XRP = True
+            if ma_score_XRP > 0:
+                upbit.buy_market_order("KRW-XRP", krw_balance * 0.2 * vol_XRP * ma_score_XRP)
+                hold_XRP = True
         # BCH
-        if op_mode_BCH is True and hold_BCH is False and price_BCH is not None and price_BCH >= target_BCH and price_BCH >= ma5_BCH:
+        if op_mode_BCH is True and hold_BCH is False and price_BCH is not None and price_BCH >= target_BCH:
             ma_score_BCH = get_ma_score("KRW-BCH")
-            upbit.buy_market_order("KRW-BCH", krw_balance * 0.2 * vol_BCH * ma_score_BCH)
-            hold_BCH = True
+            if ma_score_BCH > 0:
+                upbit.buy_market_order("KRW-BCH", krw_balance * 0.2 * vol_BCH * ma_score_BCH)
+                hold_BCH = True
         # EOS
-        if op_mode_EOS is True and hold_EOS is False and price_EOS is not None and price_EOS >= target_EOS and price_EOS >= ma5_EOS:
+        if op_mode_EOS is True and hold_EOS is False and price_EOS is not None and price_EOS >= target_EOS:
             ma_score_EOS = get_ma_score("KRW-EOS")
-            upbit.buy_market_order("KRW-EOS", krw_balance * 0.2 * vol_EOS * ma_score_EOS)
-            hold_EOS = True
+            if ma_score_EOS > 0:
+                upbit.buy_market_order("KRW-EOS", krw_balance * 0.2 * vol_EOS * ma_score_EOS)
+                hold_EOS = True
 
     except Exception as e:
         print(e)
