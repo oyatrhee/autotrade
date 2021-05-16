@@ -56,8 +56,8 @@ def get_ma_score (ticker):
 
 op_mode_BTC = False
 hold_BTC = False
-op_mode_ETH = True
-hold_ETH = True
+op_mode_ETH = False
+hold_ETH = False
 op_mode_XRP = False
 hold_XRP = False
 op_mode_BCH = False
@@ -137,30 +137,40 @@ while True:
             if ma_score_BTC > 0:
                 upbit.buy_market_order("KRW-BTC", krw_balance * 0.2 * vol_BTC * ma_score_BTC)
                 hold_BTC = True
+            else:
+                op_mode_BTC = False
         # ETH
         if op_mode_ETH is True and hold_ETH is False and price_ETH is not None and price_ETH >= target_ETH:
             ma_score_ETH = get_ma_score("KRW-ETH")
             if ma_score_ETH > 0:
                 upbit.buy_market_order("KRW-ETH", krw_balance * 0.2 * vol_ETH * ma_score_ETH)
                 hold_ETH = True
+            else:
+                op_mode_ETH = False
         # XRP
         if op_mode_XRP is True and hold_XRP is False and price_XRP is not None and price_XRP >= target_XRP:
             ma_score_XRP = get_ma_score("KRW-XRP")
             if ma_score_XRP > 0:
                 upbit.buy_market_order("KRW-XRP", krw_balance * 0.2 * vol_XRP * ma_score_XRP)
                 hold_XRP = True
+            else:
+                op_mode_XRP = False
         # BCH
         if op_mode_BCH is True and hold_BCH is False and price_BCH is not None and price_BCH >= target_BCH:
             ma_score_BCH = get_ma_score("KRW-BCH")
             if ma_score_BCH > 0:
                 upbit.buy_market_order("KRW-BCH", krw_balance * 0.2 * vol_BCH * ma_score_BCH)
                 hold_BCH = True
+            else:
+                op_mode_BCH = False
         # EOS
         if op_mode_EOS is True and hold_EOS is False and price_EOS is not None and price_EOS >= target_EOS:
             ma_score_EOS = get_ma_score("KRW-EOS")
             if ma_score_EOS > 0:
                 upbit.buy_market_order("KRW-EOS", krw_balance * 0.2 * vol_EOS * ma_score_EOS)
                 hold_EOS = True
+            else:
+                op_mode_EOS = False
 
     except Exception as e:
         print(e)
