@@ -56,8 +56,8 @@ def get_ma_score (ticker):
 
 op_mode_BTC = True
 hold_BTC = True
-op_mode_ETH = False
-hold_ETH = False
+op_mode_ETH = True
+hold_ETH = True
 op_mode_XRP = False
 hold_XRP = False
 op_mode_BCH = False
