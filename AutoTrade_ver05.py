@@ -54,10 +54,10 @@ def get_ma_score (ticker):
     ma_score = ma3_score + ma5_score + ma10_score + ma15_score + ma20_score
     return ma_score
 
-op_mode_BTC = True
-hold_BTC = True
-op_mode_ETH = True
-hold_ETH = True
+op_mode_BTC = False
+hold_BTC = False
+op_mode_ETH = False
+hold_ETH = False
 op_mode_XRP = False
 hold_XRP = False
 op_mode_BCH = False
@@ -69,7 +69,7 @@ while True:
     try:
         now = datetime.datetime.now()
 
-        if now.hour == 8 and now.minute == 59 and (57 <= now.second <= 59):
+        if now.hour == 8 and now.minute == 59 and (55 <= now.second <= 59):
             # BTC
             if op_mode_BTC is True and hold_BTC is True:
                 BTC_balance = upbit.get_balance("KRW-BTC")
@@ -122,7 +122,7 @@ while True:
                     op_mode_EOS = False
                     hold_EOS = False
 
-        if now.hour == 9 and now.minute == 0 and (10 <= now.second <= 12):
+        if now.hour == 9 and now.minute == 0 and (20 <= now.second <= 25):
             krw_balance = upbit.get_balance("KRW")
             # BTC
             target_BTC = cal_target("KRW-BTC")
