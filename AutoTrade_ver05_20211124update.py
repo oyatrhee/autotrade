@@ -60,8 +60,8 @@ op_mode_ETH = False
 hold_ETH = False
 op_mode_ADA = False
 hold_ADA = False
-op_mode_BCH = True
-hold_BCH = True
+op_mode_BCH = False
+hold_BCH = False
 op_mode_SOL = False
 hold_SOL = False
 
